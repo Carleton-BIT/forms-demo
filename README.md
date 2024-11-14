@@ -1,23 +1,17 @@
 # forms-demo
 
-## Steps to get this django app running on your own server
+You're welcome to check the commit history in this repository to see what changes were made.
 
-1) Open a terminal and navigate to the folder you want to create your project in (e.g. `cd ~Documents/Code`)
-2) Clone this repository with `git clone https://github.com/Carleton-BIT/forms-demo.git`
-3) Open the repository with PyCharm. You can do this by going file->open and selecting the cloned folder called `forms-demo`
-4) Configure your project interpreter. Go to file->settings, and selecting Python Interpreter under `Project: forms-demo`, and clicking Add Interpreter->Add Local Interpreter
-![screenshot for adding interpreter](readme_assets/add-interpreter.PNG)
-5) Choose the default settings and click OK
-![screenshot for virtualenv settings](readme_assets/confirm-interpreter.PNG)
-6) Then, you can install dependencies using PyCharm (django and python-decouple). Or, you can use the command line (`pip install django python-decouple`)
-![screenshot for adding dependencies](readme_assets/add-dependencies.png)
-7) Create a run configuration:
-![edit run configs](readme_assets/edit-run-configuration.png)
-8) Configure it to run manage.py with the parameter runserver:
-![finished run config](readme_assets/finished-run-configuration.png)
-9) In your project folder (forms-demo/studentdemo) create a file called `.env`
-10) Generate a secret key by running `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'` in the terminal. Copy the output.
-11) Edit `.env` (created in part 9) with a text editor like notepad, and add a line that says `SECRET_KEY="your-secret-key-here"`. Paste the output from part 10 into 'your-secret-key-here'.
-12) On the terminal, navigate to `forms-demo/studentdemo` and run `python manage.py migrate`
-13) Run the server by clicking the play button for the run configuration you set up
-14) Navigate to 127.0.0.1:8000! Your app should load.
+On a high level, this is what was done to display the form:
+
+1) Create a TaskForm class in todoapp/forms.py which is associated with the Task model
+2) In my view for index.html, create a new empty instance of TaskForm and pass it to the template
+3) In the template, render the form by creating a `<form>` element, putting `{{ form.as_p }}` inside of the `<form>` element instead of manually specifying labels and inputs for the form.
+
+This is what was done to process submitted forms:
+
+1) Create a new view that is responsible for handling submitted forms (e.g. `create_task`).
+2) Create a new instance of  `TaskForm` and pass `request.POST` to the constructor.
+3) Check if the form is valid
+4) Call `form.save()` to save the new `Task` to the database
+5) Redirect to the homepage
